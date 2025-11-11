@@ -595,4 +595,3 @@ print(f"Point counts: {point_counts}")
 - [ ] Exceptional presentation and documentation
 - [ ] Creative use of the stippling technique
 - [ ] Professional-quality GitHub Pages site
-
