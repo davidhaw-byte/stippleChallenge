@@ -3,44 +3,11 @@ title: "Selection Bias & Missing Data Challenge - Part 1"
 subtitle: "Blue Noise Stippling: Creating Art from Data"
 format:
   html: default
-  pdf: default
 execute:
   echo: false
   eval: true
 ---
 
-# 🎨 Selection Bias & Missing Data Challenge - Part 1
-
-::: {.callout-important}
-## 📊 Challenge Requirements
-
-**Your Task:** Reproduce the blue noise stippling process demonstrated below to create:
-1. A stippled version of your chosen image
-2. A progressive stippling GIF animation
-3. Post both to a GitHub Pages site with appropriate captions and a brief explanation
-
-**Part 2 Preview:** On November 18th, we'll tackle Part 2 of this challenge, where you'll create a statistical meme about selection bias and missing data using your stippled images.
-:::
-
-## The Problem: Can Algorithms Create Art?
-
-**Core Question:** How can we convert a photograph into an aesthetically pleasing pattern of dots that preserves the visual information of the original image?
-
-**The Challenge:** Blue noise stippling is a technique that converts images into patterns of dots (stipples) using algorithms that balance visual accuracy with spatial distribution. This challenge asks you to implement a modified "void and cluster" algorithm that combines importance sampling with blue noise distribution properties to create stippling patterns that are both visually accurate and spatially well-distributed.
-
-**Our Approach:** We'll use a modified void-and-cluster algorithm that:
-1. Creates an importance map identifying visually important regions
-2. Uses a toroidal (periodic) Gaussian kernel for repulsion to ensure blue noise properties
-3. Iteratively selects points with minimum energy
-4. Balances image content importance with blue noise spatial distribution
-
-::: {.callout-warning}
-## ⚠️ AI Partnership Required
-
-This challenge pushes boundaries intentionally. You'll tackle problems that normally require weeks of study, but with Cursor AI as your partner (and your brain keeping it honest), you can accomplish more than you thought possible.
-
-**The new reality:** The four stages of competence are Ignorance → Awareness → Learning → Mastery. AI lets us produce Mastery-level work while operating primarily in the Awareness stage. I focus on awareness training, you leverage AI for execution, and together we create outputs that used to require years of dedicated study.
-:::
 
 ## Introduction to Blue Noise Stippling
 
@@ -80,8 +47,8 @@ ax.set_title('Original Image', fontsize=14, fontweight='bold', pad=10)
 plt.tight_layout()
 plt.show()
 
-print(f"Image shape: {img_array.shape}")
-print(f"Image size: {img_array.shape[0]}x{img_array.shape[1]} pixels")
+#print(f"Image shape: {img_array.shape}")
+#print(f"Image size: {img_array.shape[0]}x{img_array.shape[1]} pixels")
 ```
 
 ## Importance Mapping
@@ -309,7 +276,7 @@ if img_array.shape[0] > max_size or img_array.shape[1] > max_size:
     if img_resized_pil.mode != 'L':
         img_resized_pil = img_resized_pil.convert('L')
     img_resized = np.array(img_resized_pil, dtype=np.float32) / 255.0
-    print(f"Resized image from {img_array.shape} to {img_resized.shape} for processing")
+    #print(f"Resized image from {img_array.shape} to {img_resized.shape} for processing")
 else:
     img_resized = img_array.copy()
 
@@ -321,7 +288,7 @@ elif len(img_resized.shape) == 2:
 else:
     raise ValueError(f"Unexpected image shape: {img_resized.shape}")
 
-print(f"Final image shape: {img_resized.shape} (should be 2D for grayscale)")
+#print(f"Final image shape: {img_resized.shape} (should be 2D for grayscale)")
 
 # Compute importance map using default parameters
 importance_map = compute_importance(
@@ -331,7 +298,7 @@ importance_map = compute_importance(
     extreme_threshold_high=0.8,
     extreme_sigma=0.1
 )
-print("Importance map computed")
+#print("Importance map computed")
 ```
 
 ## Generating the Stippled Image
@@ -355,8 +322,8 @@ stipple_pattern, samples = void_and_cluster(
     noise_scale_factor=0.1
 )
 
-print(f"Generated {len(samples)} stipple points")
-print(f"Stipple pattern shape: {stipple_pattern.shape}")
+#print(f"Generated {len(samples)} stipple points")
+#print(f"Stipple pattern shape: {stipple_pattern.shape}")
 ```
 
 ## Displaying the Results
@@ -407,8 +374,8 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import PillowWriter
 
 # Use the existing samples array from the already-computed stippling
-print(f"Using existing stippling with {len(samples)} points")
-print(f"Image shape: {img_resized.shape}")
+#print(f"Using existing stippling with {len(samples)} points")
+#print(f"Image shape: {img_resized.shape}")
 
 # Create progressive frames by adding points sequentially
 frame_increment = 100
@@ -436,8 +403,8 @@ for i in range(1, len(samples)):
         frames.append(progressive_stipple.copy())
         point_counts.append(i + 1)
 
-print(f"Generated {len(frames)} frames")
-print(f"Point counts: {point_counts}")
+#print(f"Generated {len(frames)} frames")
+#print(f"Point counts: {point_counts}")
 ```
 
 Now let's create the GIF animation:
@@ -454,7 +421,7 @@ fig, ax = plt.subplots(figsize=(7, 5))
 ax.axis('off')
 
 # Create the animation
-print("Creating GIF animation...")
+#print("Creating GIF animation...")
 writer = PillowWriter(fps=2)  # 2 frames per second
 
 gif_path = 'progressive_stippling.gif'
@@ -467,9 +434,9 @@ with writer.saving(fig, gif_path, dpi=100):
                      fontsize=14, fontweight='bold', pad=10)
         writer.grab_frame()
 
-print(f"GIF saved to: {gif_path}")
-print(f"Total frames: {len(frames)}")
-print(f"Point counts: {point_counts}")
+#print(f"GIF saved to: {gif_path}")
+#print(f"Total frames: {len(frames)}")
+#print(f"Point counts: {point_counts}")
 ```
 
 ![Progressive stippling animation showing the sequential build-up of points. Each frame represents an increment of 100 points, demonstrating how the blue noise stippling pattern develops as more points are added.](progressive_stippling.gif)
